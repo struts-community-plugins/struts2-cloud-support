@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+-->
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <bean type="org.apache.struts2.convention.ResultMapBuilder" name="conventionLambda"
+          class="org.apache.struts2.aws.lambda.support.result.LambdaResultMapBuilder"/>
+
+    <constant name="struts.corsHeader.allowOrigin" value=""/>
+    <constant name="struts.corsHeader.allowHeaders" value="Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"/>
+    <constant name="struts.corsHeader.allowCredentials" value="true"/>
+    <constant name="struts.corsHeader.contentType" value="application/json"/>
+
+    <constant name="struts.convention.resultMapBuilder" value="conventionLambda"/>
+
+    <package name="struts-lambda-support" extends="rest-default">
+        <interceptors>
+            <!-- See BaseDataController -->
+            <interceptor name="corsHeader" class="org.apache.struts2.aws.lambda.support.interceptors.CorsHeaderInterceptor"/>
+            <interceptor name="httpStatusCodeToHeader"
+                         class="org.apache.struts2.aws.lambda.support.interceptors.HttpStatusCodeToHeaderInterceptor"/>
+            <interceptor name="dataError" class="org.apache.struts2.aws.lambda.support.interceptors.ExceptionHandlerInterceptor"/>
+            <interceptor name="beanValidation"
+                         class="org.apache.struts2.aws.lambda.support.interceptors.LambdaBeanValidationInterceptor"/>
+            <interceptor name="restLambda"
+                         class="org.apache.struts2.aws.lambda.support.interceptors.LambdaRestContentTypeInterceptor"/>
+
+            <interceptor-stack name="lambdaDefaultStack">
+                <interceptor-ref name="corsHeader"/>
+                <interceptor-ref name="httpStatusCodeToHeader"/>
+                <interceptor-ref name="dataError"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven">
+                    <param name="refreshModelBeforeResult">true</param>
+                </interceptor-ref>
+                <interceptor-ref name="restLambda"/>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="beanValidation">
+                    <param name="excludeMethods">input,back,cancel,browse,index,show,edit,editNew</param>
+                </interceptor-ref>
+                <interceptor-ref name="restWorkflow">
+                    <param name="excludeMethods">input,back,cancel,browse,index,show,edit,editNew</param>
+                </interceptor-ref>
+            </interceptor-stack>
+
+        </interceptors>
+
+        <default-interceptor-ref name="lambdaDefaultStack"/>
+        <global-allowed-methods>index,show,create,update,destroy</global-allowed-methods>
+    </package>
+</struts>
