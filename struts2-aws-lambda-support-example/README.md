@@ -8,7 +8,7 @@ This example AWS Lambda function demonstrate how to create a simple Lambda funct
 
 1. Run **mvn install** to build ZIP file
 2. In AWS Console or over AWS CLI deploy generated ZIP file with name **struts2-orders-demo**
-3. Use _org.apache.struts2.aws.lambda.support.handler.Struts2LambdaHandler::handleRequest_ as Handler
+3. Use _com.amazonaws.serverless.proxy.struts2.Struts2LambdaHandler::handleRequest_ as Handler
 
 ### API Gateway configuration
 
