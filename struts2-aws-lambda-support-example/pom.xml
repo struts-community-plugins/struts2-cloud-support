@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.jgeppert.struts2</groupId>
         <artifactId>struts2-cloud-support</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>struts2-aws-lambda-support-example</artifactId>
     <name>Struts2 AWS Lambda Support Plugin Example Showcase</name>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.jgeppert.struts2</groupId>
             <artifactId>struts2-aws-lambda-support-plugin</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
