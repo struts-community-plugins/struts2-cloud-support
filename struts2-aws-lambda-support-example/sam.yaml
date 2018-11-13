@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Struts2 AWS Lambda Support Plugin Example - 1.1.0-SNAPSHOT
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+
+Resources:
+  Struts2LambdaSupportExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.amazonaws.serverless.proxy.struts2.Struts2LambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: target/struts2-aws-lambda-support-example-1.1.0-SNAPSHOT-lambda.zip
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 30
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  Struts2LambdaSupportExampleApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/data/order.json'
+    Export:
+      Name: Struts2LambdaSupportExample

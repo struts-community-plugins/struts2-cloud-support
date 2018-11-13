@@ -2,451 +2,68 @@
 
 This example AWS Lambda function demonstrate how to create a simple Lambda function to manage orders.
 
-## Run Demo
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `sam.yaml` file in the root folder contains the application definition
 
-### Deploy as AWS Lambda function 
+## Installation
+To build and install the sample application you will need [Maven](https://maven.apache.org/) and the [AWS CLI](https://aws.amazon.com/cli/) installed on your computer.
 
-1. Run **mvn install** to build ZIP file
-2. In AWS Console or over AWS CLI deploy generated ZIP file with name **struts2-orders-demo**
-3. Use _com.amazonaws.serverless.proxy.struts2.Struts2LambdaHandler::handleRequest_ as Handler
+In a shell, navigate to the sample's folder and use maven to build a deployable jar.
+```
+$ mvn package
+```
 
-### API Gateway configuration
+This command should generate a `struts2-aws-lambda-support-example-1.1.0-SNAPSHOT-lambda.zip` in the `target` folder. Now that we have generated the zip file, we can use the AWS CLI to package the template for deployment. 
 
-1. Select Service Amazon API Gateway
-2. Click Create API and use following API definition swagger file and replace all <YOUR_REGION> with your Region (e.g. us-west-2) and all <YOUR_AWS_ACCOUNT_ID> with your account id
+You will need an S3 bucket to store the artifacts for deployment. Once you have created the S3 bucket, run the following command from the sample's folder:
 
-````json
+```
+$ aws cloudformation package --template-file sam.yaml --output-template-file output-sam.yaml --s3-bucket <YOUR S3 BUCKET NAME>
+Uploading to xxxxxxxxxxx  10232401 / 10232401.0  (100.00%)
+Successfully packaged artifacts and wrote output template to file output-sam.yaml.
+Execute the following command to deploy the packaged template
+aws cloudformation deploy --template-file /path/to/saml/struts2-aws-lambda-support-example/output-sam.yaml --stack-name <YOUR STACK NAME>
+```
 
+As the command output suggests, you can now use the cli to deploy the application. Choose a stack name and run the `aws cloudformation deploy` command from the output of the package command.
+ 
+```
+$ aws cloudformation deploy --template-file output-sam.yaml --stack-name <YOUR STACK NAME> --capabilities CAPABILITY_IAM
+```
+
+Once the application is deployed, you can describe the stack to show the API endpoint that was created. The endpoint should be the `Struts2LambdaSupportExampleApi` key of the `Outputs` property:
+
+```
+$ aws cloudformation describe-stacks --stack-name <YOUR STACK NAME>
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "orders"
-  },
-  "basePath": "/demo",
-  "schemes": [
-    "https"
-  ],
-  "paths": {
-    "/data/language": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:<YOUR REGION>:1234567879:stack/<YOUR STACK NAME>/1234-abcde-46788,
+            "StackName": "<YOUR STACK NAME>",
+            "ChangeSetId": "arn:aws:cloudformation:<YOUR REGION>:1234567879:changeSet/awscli-cloudformation-package-deploy-1542130046/1234567-0008-4d10-b925-890",
+            "Description": "Struts2 AWS Lambda Support Plugin Example - 1.1.0-SNAPSHOT",
+            "CreationTime": "2018-10-31T12:41:30.316Z",
+            "LastUpdatedTime": "2018-11-13T17:27:32.209Z",
+            "RollbackConfiguration": {},
+            "StackStatus": "UPDATE_COMPLETE",
+            "DisableRollback": false,
+            "NotificationARNs": [],
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ],
+            "Outputs": [
+                {
+                    "OutputKey": "Struts2LambdaSupportExampleApi",
+                    "OutputValue": "https://xxxx.execute-api.<YOUR REGION>.amazonaws.com/Prod/data/order.json",
+                    "Description": "URL for application",
+                    "ExportName": "Struts2LambdaSupportExample"
+                }
+            ],
+            "Tags": [],
+            "EnableTerminationProtection": false
         }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "passthroughBehavior": "when_no_match",
-          "type": "mock"
-        }
-      }
-    },
-    "/data/order": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "Empty",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "Empty",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'POST,GET,OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "passthroughBehavior": "when_no_match",
-          "type": "mock"
-        }
-      }
-    },
-    "/data/order/{id}": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "put": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "delete": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "uri": "arn:aws:apigateway:<YOUR_REGION>:lambda:path/2015-03-31/functions/arn:aws:lambda:<YOUR_REGION>:<YOUR_AWS_ACCOUNT_ID>:function:struts2-orders-demo/invocations",
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,OPTIONS,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "passthroughBehavior": "when_no_match",
-          "type": "mock"
-        }
-      }
-    }
-  },
-  "definitions": {
-    "Empty": {
-      "type": "object",
-      "title": "Empty Schema"
-    }
-  },
-  "x-amazon-apigateway-minimum-compression-size": 0
+    ]
 }
 
-````
-
-2. Go to resources and select _orders_ and select path /data/order/GET
-3. Click _Test_ in the Client section.
-4. Enter following headers in the Headers text area and execute
-5. In the API Actions dropdown select _Deploy API_ and deploy it to existent or new stage
-   
-```
-Accept:application/json
-Content-Type:application/json;charset=UTF-8
 ```
 
-5. In the results you should see a json array of three orders
-6. If an error message is shown please try to go to **Integration Request** and select the deployed lambda function again.
-
-
-### Run demo webapp
-
-1. Go to src/main/webapp
-2. Edit js/app.js and configure your API endpoint with your region, account id and stage.
-3. Deploy static website content on a webserver or S3 bucket with static website hosting.
+Copy the `OutputValue` into a browser to test a first request.
