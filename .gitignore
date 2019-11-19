@@ -24,3 +24,7 @@ hs_err_pid*
 # Intellij Files
 .idea
 *.iml
+
+# Maven
+target
+.mvn/wrapper/maven-wrapper.jar

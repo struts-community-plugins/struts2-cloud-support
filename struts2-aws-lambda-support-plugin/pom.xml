@@ -5,13 +5,17 @@
     <parent>
         <groupId>com.jgeppert.struts2</groupId>
         <artifactId>struts2-cloud-support</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>struts2-aws-lambda-support-plugin</artifactId>
     <packaging>jar</packaging>
     <name>Struts2 AWS Lambda Support Plugin</name>
 
     <description>An Apache Struts Plugin to help building AWS Lambdas based on Struts2 applications.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
 

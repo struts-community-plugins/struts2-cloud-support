@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jgeppert.struts2</groupId>
     <artifactId>struts2-cloud-support</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0-SNAPSHOT</version>
     <name>Struts2 and Cloud Integration</name>
     <packaging>pom</packaging>
     <url>https://github.com/struts-community-plugins/struts2-cloud-support</url>
@@ -43,7 +43,7 @@
     <properties>
         <currentVersion>${project.version}</currentVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <struts2.version>2.5.18</struts2.version>
+        <struts2.version>2.5.20</struts2.version>
     </properties>
 
     <!-- Use existing jquery staging repository -->
@@ -162,7 +162,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     <source>1.8</source>

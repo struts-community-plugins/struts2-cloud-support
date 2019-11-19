@@ -5,18 +5,23 @@
     <parent>
         <groupId>com.jgeppert.struts2</groupId>
         <artifactId>struts2-cloud-support</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>struts2-aws-lambda-support-example</artifactId>
     <name>Struts2 AWS Lambda Support Plugin Example Showcase</name>
 
     <description>An showcase example how to build AWS Lambdas based on Struts2 an application.</description>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jackson.version>2.10.1</jackson.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.jgeppert.struts2</groupId>
             <artifactId>struts2-aws-lambda-support-plugin</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -28,17 +33,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.9.4</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.9.4</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.4</version>
+            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>
