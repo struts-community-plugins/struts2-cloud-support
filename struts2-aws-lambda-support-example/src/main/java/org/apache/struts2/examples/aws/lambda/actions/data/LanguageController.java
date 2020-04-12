@@ -4,8 +4,6 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.struts2.rest.RestActionSupport;
 
 import java.util.Locale;
@@ -20,6 +18,7 @@ public class LanguageController extends RestActionSupport implements ModelDriven
 
     private Map<String, String> model;
 
+    @Override
     public String index() {
 
         Locale locale = ActionContext.getContext().getLocale();

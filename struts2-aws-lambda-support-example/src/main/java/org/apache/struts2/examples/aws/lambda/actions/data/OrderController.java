@@ -18,7 +18,7 @@ public class OrderController extends RestActionSupport implements ModelDriven<Ob
     private Order model = new Order();
     private String id;
     private Collection<Order> list = null;
-    private OrdersService ordersService = new OrdersService();
+    private final transient OrdersService ordersService = new OrdersService();
 
     // GET /data/order/1
     public HttpHeaders show() {
@@ -26,6 +26,7 @@ public class OrderController extends RestActionSupport implements ModelDriven<Ob
     }
 
     // GET /data/order
+    @Override
     public HttpHeaders index() {
         list = ordersService.getAll();
         return new DefaultHttpHeaders("index")
