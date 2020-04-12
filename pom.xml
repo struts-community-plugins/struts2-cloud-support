@@ -43,7 +43,7 @@
     <properties>
         <currentVersion>${project.version}</currentVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <struts2.version>2.5.20</struts2.version>
+        <struts2.version>2.5.22</struts2.version>
     </properties>
 
     <!-- Use existing jquery staging repository -->
@@ -144,7 +144,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
+            <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
