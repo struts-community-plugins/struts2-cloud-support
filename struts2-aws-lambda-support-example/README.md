@@ -2,7 +2,8 @@
 
 This example AWS Lambda function demonstrate how to create a simple Lambda function to manage orders.
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `sam.yaml` file in the root folder contains the application definition
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). 
+The `sam.yaml` file in the root folder contains the application definition.
 
 ## Installation
 To build and install the sample application you will need [Maven](https://maven.apache.org/) and the [AWS CLI](https://aws.amazon.com/cli/) installed on your computer.
@@ -12,7 +13,8 @@ In a shell, navigate to the sample's folder and use maven to build a deployable 
 $ mvn package
 ```
 
-This command should generate a `struts2-aws-lambda-support-example-1.1.0-SNAPSHOT-lambda.zip` in the `target` folder. Now that we have generated the zip file, we can use the AWS CLI to package the template for deployment. 
+This command should generate a `struts2-aws-lambda-support-example-1.3.0-lambda.zip` in the `target` folder. 
+Now that we have generated the zip file, we can use the AWS CLI to package the template for deployment. 
 
 You will need an S3 bucket to store the artifacts for deployment. Once you have created the S3 bucket, run the following command from the sample's folder:
 
@@ -40,7 +42,7 @@ $ aws cloudformation describe-stacks --stack-name <YOUR STACK NAME>
             "StackId": "arn:aws:cloudformation:<YOUR REGION>:1234567879:stack/<YOUR STACK NAME>/1234-abcde-46788,
             "StackName": "<YOUR STACK NAME>",
             "ChangeSetId": "arn:aws:cloudformation:<YOUR REGION>:1234567879:changeSet/awscli-cloudformation-package-deploy-1542130046/1234567-0008-4d10-b925-890",
-            "Description": "Struts2 AWS Lambda Support Plugin Example - 1.1.0-SNAPSHOT",
+            "Description": "Struts2 AWS Lambda Support Plugin Example - 1.3.0",
             "CreationTime": "2018-10-31T12:41:30.316Z",
             "LastUpdatedTime": "2018-11-13T17:27:32.209Z",
             "RollbackConfiguration": {},
