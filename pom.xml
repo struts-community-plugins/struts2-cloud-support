@@ -17,7 +17,7 @@
 
     <developers>
         <developer>
-            <id>johgep</id>
+            <id>jogep</id>
             <name>Johannes Geppert</name>
             <url>http://www.jgeppert.com</url>
             <email>http://www.jgeppert.com/kontakt</email>
@@ -43,7 +43,7 @@
     <properties>
         <currentVersion>${project.version}</currentVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <struts2.version>2.5.22</struts2.version>
+        <struts2.version>2.5.26</struts2.version>
     </properties>
 
     <!-- Use existing jquery staging repository -->
@@ -154,7 +154,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.1.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
