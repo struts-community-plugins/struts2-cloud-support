@@ -10,7 +10,7 @@ Add lambda plugin to your dependencies.
         <dependency>
             <groupId>com.jgeppert.struts2</groupId>
             <artifactId>struts2-aws-lambda-support-plugin</artifactId>
-            <version>1.1.0</version>
+            <version>1.4.0</version>
         </dependency>
 ```
 
@@ -37,14 +37,16 @@ Add lambda plugin to your dependencies.
     <constant name="struts.convention.package.locators" value="actions"/>
     <constant name="struts.convention.default.parent.package" value="data"/>
     <constant name="struts.action.extension" value=",,xml,json,action"/>
-    <constant name="struts.rest.defaultExtension" value="json" />
+    <constant name="struts.rest.defaultExtension" value="json"/>
 
     <constant name="struts.custom.i18n.resources" value="frontend,validation,exceptions"/>
 
     <constant name="struts.mapper.class" value="rest"/>
 
     <!-- Use Jackson lib as content handler for all JSON requests -->
-    <bean type="org.apache.struts2.rest.handler.ContentTypeHandler" name="jackson" class="org.apache.struts2.rest.handler.JacksonLibHandler"/>
+    <bean type="org.apache.struts2.rest.handler.ContentTypeHandler"
+          name="jackson"
+          class="org.apache.struts2.rest.handler.JacksonJsonHandler"/>
     <constant name="struts.rest.handlerOverride.json" value="jackson"/>
 
     <!-- Set to false if the json content can be returned for any kind of http method -->
@@ -99,7 +101,7 @@ public class OrderController extends RestActionSupport implements ModelDriven<Ob
     private Order model = new Order();
     private String id;
     private Collection<Order> list = null;
-    private OrdersService ordersService = new OrdersService();
+    private final OrdersService ordersService = new OrdersService();
 
     // GET /data/order/1
     public HttpHeaders show() {
