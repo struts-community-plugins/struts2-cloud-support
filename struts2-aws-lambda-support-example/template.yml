@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Struts AWS Lambda Support Plugin Example - 1.4.1
+Description: Struts AWS Lambda Support Plugin Example - 1.4.2
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
@@ -11,7 +11,7 @@ Resources:
     Properties:
       Handler: com.amazonaws.serverless.proxy.struts.StrutsLambdaHandler::handleRequest
       Runtime: java8
-      CodeUri: target/struts2-aws-lambda-support-example-1.4.1-lambda.zip
+      CodeUri: target/struts2-aws-lambda-support-example-1.4.2-lambda.zip
       MemorySize: 512
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 30
