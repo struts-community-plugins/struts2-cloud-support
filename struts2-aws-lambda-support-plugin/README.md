@@ -10,7 +10,7 @@ Add lambda plugin to your dependencies.
         <dependency>
             <groupId>com.jgeppert.struts2</groupId>
             <artifactId>struts2-aws-lambda-support-plugin</artifactId>
-            <version>1.4.0</version>
+            <version>1.4.1</version>
         </dependency>
 ```
 
@@ -230,7 +230,7 @@ In maven applications the assembly plugin will help to build a Lambda zip file f
 
 1. Run **mvn install** to build ZIP file
 2. In AWS Console or over AWS CLI deploy generated ZIP file
-3. Use _com.amazonaws.serverless.proxy.struts2.Struts2LambdaHandler::handleRequest_ as Handler
+3. Use _com.amazonaws.serverless.proxy.struts.StrutsLambdaHandler::handleRequest_ as Handler
 
 ### Optional API Gateway configuration
 
