@@ -21,8 +21,8 @@
 
         <dependency>
             <groupId>com.amazonaws.serverless</groupId>
-            <artifactId>aws-serverless-java-container-struts2</artifactId>
-            <version>1.5.2</version>
+            <artifactId>aws-serverless-java-container-struts</artifactId>
+            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>

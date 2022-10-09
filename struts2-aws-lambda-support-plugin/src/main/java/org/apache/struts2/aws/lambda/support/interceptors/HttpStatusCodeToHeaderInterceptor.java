@@ -8,7 +8,7 @@ import org.apache.struts2.StrutsStatics;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Lambda can not handle the request status itself. Workarround is to set the status code as response header and read this afterwards in the {@link com.amazonaws.serverless.proxy.struts2.Struts2LambdaContainerHandler} to set correct status code.
+ * Lambda can not handle the request status itself. Workaround is to set the status code as response header and read this afterwards in the {@link com.amazonaws.serverless.proxy.struts.StrutsLambdaContainerHandler} to set correct status code.
  */
 @Log4j2
 public class HttpStatusCodeToHeaderInterceptor extends MethodFilterInterceptor {
