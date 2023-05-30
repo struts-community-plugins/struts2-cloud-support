@@ -10,7 +10,7 @@ Add lambda plugin to your dependencies.
         <dependency>
             <groupId>com.jgeppert.struts2</groupId>
             <artifactId>struts2-aws-lambda-support-plugin</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.3</version>
         </dependency>
 ```
 
